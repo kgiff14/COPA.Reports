@@ -1,6 +1,7 @@
 using Conservice.Application;
 using COPA.Reports.BLL;
 using COPA.Reports.BLL.Utilities;
+using COPA.Reports.Controllers;
 using COPA.Reports.DAL.Implementations;
 using COPA.Reports.DAL.Interfaces;
 using Microsoft.AspNetCore.Builder;
@@ -34,7 +35,8 @@ namespace COPA.Reports
                     .AddSingleton<SqlAccessor>()
                     .AddSingleton<IPaymentAccess, PaymentDataAccess>()
                     .AddSingleton<IArangoAccess, ArangoDataAccess>()
-                    .AddSingleton<PaymentBreakdownLogic>();
+                    .AddSingleton<IPaymentBreakdownLogic, PaymentBreakdownLogic>()
+                    .AddSingleton<BreakdownController>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,7 +62,9 @@ namespace COPA.Reports
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapRazorPages();
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

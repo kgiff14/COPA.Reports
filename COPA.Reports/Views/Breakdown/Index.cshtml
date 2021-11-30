@@ -1,0 +1,37 @@
+﻿@model COPA.Reports.BLL.PaymentBreakdownLogic
+@{
+    ViewData["Title"] = "COPA Health Breakdown";
+}
+
+<div class="container-fluid">
+    <h2>
+        COPA Health Breakdown
+    </h2>
+    <div>
+        <table id="breakdownTable" class="table table-striped table-bordered table-sm table-hover" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>Payment ID</th>
+                    <th>Control Number</th>
+                    <th>Invoice Number</th>
+                    <th>Payment Date</th>
+                    <th>Client</th>
+                    <th>Provider</th>
+                    <th>Amount Paid</th>
+                    <th>Fee</th>
+                    <th>Amount To Be Paid</th>
+                    <th>Account Number</th>
+                    <th>Payment Status</th>
+                    <th>Failure Reason</th>
+                    <th>Confirmation Number</th>
+                    <th>Automation Image Path</th>
+                    <th>Manual Image Path</th>
+                </tr>
+            </thead>
+            @{
+                await Html.RenderPartialAsync("_BreakdownTable", Model);
+             }
+        </table>
+    </div>
+</div>
+

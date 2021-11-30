@@ -40,24 +40,31 @@ namespace COPA.Reports.DAL.Implementations
 
         private PaymentBreakdown ReadPaymentBreakdown(SqlDataReader reader)
         {
-            SqlDataConverter conv = new SqlDataConverter(reader);
-            PaymentBreakdown info = new PaymentBreakdown
+            try
             {
-                PaymentID = conv.ToInt("PaymentId"),
-                PaymentDate = conv.ToDateTime("PaymentRequestDate"),
-                Client = conv.ToString("ClientName"),
-                AmountPaid = conv.ToDecimal("TransactionAmount"),
-                PaymentStatus = conv.ToString("PaymentStatusName"),
-                Fee = conv.ToDecimal("Fee"),
-                FailureReason = conv.ToString("AutomationExceptionMessage"),
-                ConfirmationNumber = conv.ToInt("ConfirmationNumber"),
-                ClientSystemBillID = conv.ToString("InvoiceID"),
-                AutomationImagePath = conv.ToString("AutomationFailureControlNumber"),
-                ManualImagePath = conv.ToString("ManualFailureControlNumber"),
-                AmountToBePaid = conv.ToDecimal("PaymentAmount")
-            };
+                SqlDataConverter conv = new SqlDataConverter(reader);
+                PaymentBreakdown info = new PaymentBreakdown
+                {
+                    PaymentID = conv.ToInt("PaymentId"),
+                    PaymentDate = conv.ToDateTime("PaymentRequestDate"),
+                    Client = conv.ToString("ClientName"),
+                    AmountPaid = conv.ToDecimal("TransactionAmount"),
+                    PaymentStatus = conv.ToString("PaymentStatusName"),
+                    Fee = conv.ToDecimal("Fee"),
+                    FailureReason = conv.ToString("AutomationExceptionMessage"),
+                    ConfirmationNumber = conv.ToInt("ConfirmationNumber"),
+                    ClientSystemBillID = conv.ToString("InvoiceID"),
+                    AutomationImagePath = conv.ToString("AutomationFailureControlNumber"),
+                    ManualImagePath = conv.ToString("ManualFailureControlNumber"),
+                    AmountToBePaid = conv.ToDecimal("PaymentAmount")
+                };
 
-            return info;
+                return info;
+            }
+            catch
+            {
+                return new PaymentBreakdown();
+            }
         }
 
         #endregion

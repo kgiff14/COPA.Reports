@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace COPA.Reports.BLL
 {
-    public class PaymentBreakdownLogic
+    public class PaymentBreakdownLogic : IPaymentBreakdownLogic
     {
         private static ILogger logger = LoggerFactory.CreateCurrentClassLogger();
         private readonly IPaymentAccess paymentAccess;

@@ -16,23 +16,17 @@ namespace COPA.Reports
 {
     public class Program
     {
-
-
-
-
         public static void Main(string[] args)
         {
             EnvironmentAccessor environment = new EnvironmentAccessor();
-            using IHost host = CreateHostBuilder(args, environment).Build();
+            CreateHostBuilder(args, environment).Build().Run();
 
-            using IServiceScope serviceScope = host.Services.CreateScope();
-            IServiceProvider provider = serviceScope.ServiceProvider;
+            //using IServiceScope serviceScope = host.Services.CreateScope();
+            //IServiceProvider provider = serviceScope.ServiceProvider;
 
-            //LoggingLibrary.Configure(environment.Environment);
+            //PaymentBreakdownLogic logic = provider.GetRequiredService<PaymentBreakdownLogic>();
 
-            PaymentBreakdownLogic logic = provider.GetRequiredService<PaymentBreakdownLogic>();
-
-            logic.GetCOPAPaymentBreakdowns();
+            //logic.GetCOPAPaymentBreakdowns();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args, EnvironmentAccessor environment) =>
