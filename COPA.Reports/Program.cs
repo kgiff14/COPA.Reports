@@ -1,5 +1,10 @@
+using Conservice.Application;
+using Conservice.Logging;
+using COPA.Reports.BLL;
+using COPA.Reports.BLL.Utilities;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
@@ -13,14 +18,32 @@ namespace COPA.Reports
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            EnvironmentAccessor environment = new EnvironmentAccessor();
+            CreateHostBuilder(args, environment).Build().Run();
+
+            //using IServiceScope serviceScope = host.Services.CreateScope();
+            //IServiceProvider provider = serviceScope.ServiceProvider;
+
+            //PaymentBreakdownLogic logic = provider.GetRequiredService<PaymentBreakdownLogic>();
+
+            //logic.GetCOPAPaymentBreakdowns();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
+        public static IHostBuilder CreateHostBuilder(string[] args, EnvironmentAccessor environment) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((hostContext, config) =>
+                {
+                    string settingsPrefix = "Default";
+                    if (environment.Environment == ApplicationEnvironment.Production)
+                    {
+                        settingsPrefix = "Production";
+                    }
+
+                    config.AddJsonFile($"appsettings.{settingsPrefix}.json", optional: true, reloadOnChange: true);
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                     webBuilder.UseStartup<Startup>();
                 });
     }
 }

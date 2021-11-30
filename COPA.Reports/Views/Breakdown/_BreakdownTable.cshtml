@@ -1,0 +1,26 @@
+﻿@model COPA.Reports.BLL.PaymentBreakdownLogic
+
+<tbody>
+    @{
+        foreach(var payment in Model.GetCOPAPaymentBreakdowns())
+            {
+                <tr>
+                    <td>@payment.PaymentID</td>
+                    <td>@payment.ClientSystemBillID</td>
+                    <td>@payment.InvoiceNumber</td>
+                    <td>@payment.PaymentDate</td>
+                    <td>@payment.Client</td>
+                    <td>@payment.ProviderName</td>
+                    <td>@payment.AmountPaid</td>
+                    <td>@payment.Fee</td>
+                    <td>@payment.AmountToBePaid</td>
+                    <td>@payment.AccountNumber</td>
+                    <td>@payment.PaymentStatus</td>
+                    <td>@payment.FailureReason</td>
+                    <td>@payment.AccountNumber</td>
+                    <td>@payment.AutomationImagePath</td>
+                    <td>@payment.ManualImagePath</td>
+                </tr>
+            }
+    }
+</tbody>
