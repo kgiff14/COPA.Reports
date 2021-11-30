@@ -1,3 +1,8 @@
+using Conservice.Application;
+using COPA.Reports.BLL;
+using COPA.Reports.BLL.Utilities;
+using COPA.Reports.DAL.Implementations;
+using COPA.Reports.DAL.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -24,6 +29,12 @@ namespace COPA.Reports
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+            services.AddSingleton<EnvironmentAccessor>()
+                    .AddSingleton<ArangoAccessor>()
+                    .AddSingleton<SqlAccessor>()
+                    .AddSingleton<IPaymentAccess, PaymentDataAccess>()
+                    .AddSingleton<IArangoAccess, ArangoDataAccess>()
+                    .AddSingleton<PaymentBreakdownLogic>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
